@@ -1,0 +1,66 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+<h2>Profile for {{ viewed_user }}</h2>
+
+<h4>Number of Followers: {{ followers }}</h4>
+<h4>Number of Users Followed: {{ followed }}</h4>
+<!-- button to follow/unfollow user -->
+{% if user.is_authenticated %}
+    {% if user.id != viewed_user.id %}
+<!-- only show if user.is_authenticated && user.id != this page's user -->
+        {% if following == True %}
+<!-- use AJAX to update the DB and change the text of the button (follow -> unfollow, vice versa) -->
+            <form id="form-follow" action="{% url 'follow' viewed_user.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="info" value="{{ viewed_user.id }}" hidden>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="follow-btn">Unfollow</button>
+            </form>
+        {% else %}
+            <form id="form-follow" action="{% url 'follow' viewed_user.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="info" value="{{ viewed_user.id }}" hidden>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="follow-btn">Follow</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% endblock %}
+
+
+{% block posts %}
+
+<h3>Posts</h3>
+{% include "network/display_posts.html" %}
+
+{% endblock %}
+
+
+{% block nextpages %}
+
+<!-- if number of posts > 10, display 'next' button to go to the next page; hide the displayed posts, and display next ones; use JS/AJAX -->
+{% if total_posts > 10 %}
+    <div class="pagination">
+        <!-- if you are on page 2 or more, display the back button as well -->
+        {% if pagenum > 1 %}
+            <form id="prev-page" action="{% url 'profile' post.user.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="pagenum" id="{{ pagenum|add:'-1' }}" value="{{ pagenum|add:'-1' }}" hidden>
+                <button class="btn btn-sm btn-outline-primary" id="back-btn">Back</button>
+            </form>
+        {% endif %}
+        <h4 id="page-number">{{ pagenum }}</h4>
+        <!-- if there are less than 10 posts left, remove the next button -->
+        {% if page_posts >= 10 %}
+            <form id="next-page" action="{% url 'profile' post.user.id %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="pagenum" id="{{ pagenum|add:'1' }}" value="{{ pagenum|add:'1' }}" hidden>
+                <button class="btn btn-sm btn-outline-primary" id="next-btn">Next</button>
+            </form>
+        {% endif %}        
+    </div>
+{% endif %}
+
+{% endblock %}

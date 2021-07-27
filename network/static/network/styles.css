@@ -1,0 +1,49 @@
+.body, .page-posts, .next-pages {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+h2 {
+    margin-top: 10px;
+}
+
+.post {
+    border: solid 1px grey;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.nav-link {
+    height: 1.5rem;
+}
+
+.post p {
+    margin-bottom: 0.5rem;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+#page-number {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.btn {
+    margin-bottom: 4px;
+}
+
+.likes {
+    display: inline-block;
+}
+
+.datetime {
+    font-size: small;
+}
+
+.edit-timestamp {
+    display: inline-block;
+}
+

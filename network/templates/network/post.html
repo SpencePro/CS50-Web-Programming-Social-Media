@@ -1,0 +1,16 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<h2>Create Post</h2>
+
+{% if user.is_authenticated %}
+<form action="{% url 'new' %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button class="btn btn-sm btn-outline-primary" id="create-post">Create Post</button>
+</form>
+{% else %}
+<h3>Please log in to view this page!</h3>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<!-- display all posts -->
+{% for post in posts %}
+    <div class="post" id="{{ post.id }}">
+
+        <a class="nav-link" href="{% url 'profile' post.user.id %}"><p><strong>{{ post.user }}</strong></p></a>
+        <hr>
+        <p class="content" id="post-edit-{{ post.id }}">{{ post.content }}</p>
+        <!-- edit posts -->
+        {% if user.is_authenticated %}
+
+            {% if user.id == post.user.id %}
+
+                <form class="content edit-form" id="form-submit-edit-{{ post.id }}" action="{% url 'edit' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" id="content-{{ post.id }}" name="post-content" value="{{ post.content }}">
+                    <input type="button" id="submit-edit-{{ post.id }}" class="edit-btn btn btn-sm btn-outline-primary"
+                        value="Submit">
+                </form>
+
+                <button id="edit-{{ post.id }}" class="edit btn btn-sm btn-outline-primary">Edit</button>
+                <!-- when user clicks edit, use JS to make the form appear (style=display:block) and hide the p tag -->
+            
+            {% endif %}
+        <!-- like posts -->
+        
+        <form class="like-form" id="form-like-{{ post.id }}" action="{% url 'like' post.id %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="post" value="{{ post.id }}" hidden>
+
+            {% if post.id in likes %}
+                <button class="like btn btn-sm btn-outline-primary" type="button" id="like-{{ post.id }}">Unlike</button>
+            {% else %}
+                <button class="like btn btn-sm btn-outline-primary" type="button" id="like-{{ post.id }}">Like</button>
+            {% endif %}
+        </form>
+
+        {% endif %}
+
+        <!-- display likes and other post information -->
+        <div class="likes-div">
+            <label for="likes-like-{{ post.id }}" class="likes">Likes: </label>
+            <p id="likes-like-{{ post.id }}" class="likes">{{ post.likes }}</p>
+        </div>
+
+        <div class="timestamp-div" id="timestamp-div-{{ post.id }}">
+            <p class="datetime">Posted {{ post.post_timestamp|date:"M d, Y, G:i" }}</p>
+            {% if post.edit_timestamp %}
+                <div class="edit-timestamp-div">
+                    <label class="edit-timestamp datetime">Edited </label>
+                    <p class="edit-timestamp datetime" id="edited-timestamp-{{ post.id }}">{{ post.edit_timestamp|date:"M d, Y, G:i" }}</p>
+                </div>
+            {% endif %}
+        </div>  
+
+    </div>
+{% endfor %}
