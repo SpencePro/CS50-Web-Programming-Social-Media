@@ -24,9 +24,11 @@ def index(request):
     total_posts = Post.objects.all()
     pagenum = 1
 
-    likes = Like.objects.filter(user=request.user)
-    likes = [like.post.id for like in likes]
-
+    if request.user.is_authenticated:
+        likes = Like.objects.filter(user=request.user)
+        likes = [like.post.id for like in likes]
+    else:
+        likes = ""
     if request.method == "POST":
         pagenum = int(request.POST["pagenum"])
         num = (pagenum - 1) * 10
@@ -124,10 +126,11 @@ def profile_view(request, id):
         following = True
     else:
         following = False
-
-    likes = Like.objects.filter(user=request.user)
-    likes = [like.post.id for like in likes]
-
+    if request.user.is_authenticated:
+        likes = Like.objects.filter(user=request.user)
+        likes = [like.post.id for like in likes]
+    else:
+        likes = ""
     if request.method == "POST":
         pagenum = int(request.POST["pagenum"])
         num = (pagenum - 1) * 10
