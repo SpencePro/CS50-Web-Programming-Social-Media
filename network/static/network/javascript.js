@@ -55,6 +55,8 @@ function submitEdit() {
                 let editTimestamp = document.querySelector(`#edited-timestamp-${postNum}`);
                 let timeStamp = data.timestamp;
                 const dateStamp = new Date(timeStamp);
+                console.log(timeStamp);
+                console.log(dateStamp);
 
                 if (editTimestamp == null) {
                     const timestamp = document.createElement("p");

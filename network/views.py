@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -202,7 +202,7 @@ def edit_view(request, id):
 
         timestamp = post.edit_timestamp
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        if len(str(timestamp.minute)) > 2:
+        if len(str(timestamp.minute)) < 2:
             minute = f"0{timestamp.minute}"
         else:
             minute = timestamp.minute
