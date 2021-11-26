@@ -8,6 +8,9 @@ users, create posts, like and unlike posts, and edit posts.
 
 ### Functionality
 
-As described above, users can can create an account, sign in and out, follow other users and view their posts, create posts, edit 
-their own posts, as well as like and unlike posts. The web app uses AJAX to asynchronously update the DOM with data from the 
-database when liking/unliking posts, editing posts, and following/unfollowing users. This allows for a smoother user experience. 
+The project has the following functionality:
+
+- users can can create an account + sign in and out
+- users can create posts, edit their own posts, as well as like and unlike posts
+- users can follow other users and view their posts
+- The web app uses AJAX to asynchronously update the DOM with data from the database when liking/unliking posts, editing posts, and following/unfollowing users. This allows for a smoother user experience. 
